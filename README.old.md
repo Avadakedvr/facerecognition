@@ -1,2 +1,0 @@
-# facerecognition
-Face recognition app
