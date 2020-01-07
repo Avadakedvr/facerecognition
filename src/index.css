@@ -7,6 +7,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Courier New', 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
+  src: local('MyFont'), url(./components/fonts/cour.ttf) format('truetype');
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #FA8BFF;

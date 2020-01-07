@@ -1,0 +1,8 @@
+#signInForm {
+  display: inline-block;
+  margin: 0 auto;
+  margin-top: 200px;
+  all: revert;
+  max-width: 300px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serifww;
+}

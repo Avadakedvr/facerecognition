@@ -1,5 +1,4 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
 import './FaceRecognition.css';
 
 const FaceRecognition = ({imageUrl, box}) => { //received as a param/prop from App file
