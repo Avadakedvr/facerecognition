@@ -117,6 +117,12 @@ class Register extends React.Component {
     this.handleChange(event);
   }
 
+  onEnterKeyPress = (target) => {
+    if (target.charCode === 13) {
+      this.onSubmitRegister();
+    }
+  } 
+
   onSubmitRegister = () => {
     const {name, email, password} = this.state;
     if (this.formIsValid()) {
@@ -171,16 +177,16 @@ class Register extends React.Component {
         <div className="form-signup" noValidate>
           <h1 className="h3 mb-3 font-weight-normal">Register</h1>
           <label htmlFor="inputName" className="sr-only">Name</label>
-          <input name='name' onChange={this.onNameChange} type="text" id="inputName" className="form-control" placeholder="Name" required autoFocus />
+          <input name='name' onKeyPress={this.onEnterKeyPress} onChange={this.onNameChange} type="text" id="inputName" className="form-control" placeholder="Name" required autoFocus />
           {errors.name.length > 0 && <span className='error'>{errors.name}</span>}
           <label htmlFor="inputEmail" className="sr-only">Email address</label>
-          <input name='email' onChange={this.onEmailChange} type="email" className="form-control" placeholder="Email address" required autoFocus />
+          <input name='email' onKeyPress={this.onEnterKeyPress} onChange={this.onEmailChange} type="email" className="form-control" placeholder="Email address" required autoFocus />
           {errors.email.length > 0 && <span className='error'>{errors.email}</span>}
           <label htmlFor="inputPassword" className="sr-only">Password</label>
-          <input name='password' onChange={this.onPasswordChange} type="password" id="inputPassword" className="form-control " placeholder="Password" required />
+          <input name='password' onKeyPress={this.onEnterKeyPress} onChange={this.onPasswordChange} type="password" id="inputPassword" className="form-control " placeholder="Password" required />
           {errors.password.length > 0 && <span className='error'>{errors.password}</span>}
           <label htmlFor="inputPassword" className="sr-only">Confirm password</label>
-          <input name="c_password" onChange={this.handleChange} type="password" id="inputCPassword" className="form-control " placeholder="Confirm password" required />
+          <input name="c_password" onKeyPress={this.onEnterKeyPress} onChange={this.handleChange} type="password" id="inputCPassword" className="form-control " placeholder="Confirm password" required />
           {errors.c_password.length > 0 && <span className='error'>{errors.c_password}</span>}
           <button onClick={this.onSubmitRegister} className="btn btn-md btn-primary btn-block mt-4" type="submit">Register</button>
           <div className='lh-copy mt3'>

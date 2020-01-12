@@ -1,8 +1,6 @@
 import React from 'react';
 import './ImageLinkForm.css';
-
 const ImageLinkForm = ({onInputChange, onButtonSubmit}) => { //received as a param/prop from App file
-  
   return(
     <div>
       <p className='f3'>

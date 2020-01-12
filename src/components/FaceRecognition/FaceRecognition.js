@@ -11,7 +11,6 @@ const FaceRecognition = ({imageUrl, box}) => { //received as a param/prop from A
     )
   }
 
-
   return(
     <div className='center ma'>
       <div className='absolute mt2'>

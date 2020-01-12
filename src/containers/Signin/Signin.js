@@ -93,7 +93,7 @@ class Signin extends React.Component {
       return null
     }
   }
-
+  
   onEmailChange = (event) => {
     this.setState({signInEmail: event.target.value})
     this.handleChange(event)
@@ -127,6 +127,12 @@ class Signin extends React.Component {
     }
   }
 
+  onEnterKeyPress = (target) => {
+    if (target.charCode === 13) {
+      this.onSubmitSignIn();
+    }
+  } 
+
   render() {
     const {onRouteChange} = this.props;
     const {errors} = this.state;
@@ -139,6 +145,7 @@ class Signin extends React.Component {
             name="email"
             type="email" 
             id="inputEmail" 
+            onKeyPress={this.onEnterKeyPress} 
             className="form-control" 
             placeholder="Email address" 
             onChange={this.onEmailChange}
@@ -150,6 +157,7 @@ class Signin extends React.Component {
             name="password"
             type="password" 
             id="inputPassword" 
+            onKeyPress={this.onEnterKeyPress} 
             className="form-control " 
             placeholder="Password" 
             onChange={this.onPasswordChange}

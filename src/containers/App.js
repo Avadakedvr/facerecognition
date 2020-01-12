@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import './App.css';
 import MetaTags from 'react-meta-tags';
 import Navigation from '../components/Navigation/Navigation.js'
-import Signin from '../components/Signin/Signin.js'
-import Register from '../components/Register/Register.js'
+import Signin from './Signin/Signin.js'
+import Register from './Register/Register.js'
 import Logo from '../components/Logo/Logo.js'
 import ImageLinkForm from '../components/ImageLinkForm/ImageLinkForm.js'
 import Rank from '../components/Rank/Rank.js'
 import FaceRecognition from '../components/FaceRecognition/FaceRecognition.js'
 import Particles from 'react-particles-js';
+import Error from './Error/Error'
 
 const initialState = {
   input: '',
@@ -16,6 +17,8 @@ const initialState = {
   box: [],
   route: 'signin',
   isSignedIn: false,
+  showError: false,
+  errorMessage: '',
   user: {
     id: '',
     name: '',
@@ -68,6 +71,7 @@ class App extends Component {
   //propery of the App
   onInputChange = (event) => { //receive event from event listener
     this.setState({input: event.target.value});
+    this.setState({showError: false})
   }
 
   clearFaces = () => {
@@ -77,33 +81,44 @@ class App extends Component {
 
   onPictureSubmit = () => {
     this.setState({imageUrl: this.state.input});
-
-    fetch('https://lit-castle-50784.herokuapp.com/imageurl', { ////RECEIVE_POINT_FROM_SERVER
-        method: 'post',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-        input: this.state.input
+    if (this.state.input === '') {
+      this.setState({showError: true})
+      this.setState({errorMessage: 'Please enter your image url'})
+    } else {
+      fetch('https://lit-castle-50784.herokuapp.com/imageurl', { ////RECEIVE_POINT_FROM_SERVER
+          method: 'post',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+          input: this.state.input
+        })
       })
-    })
-    .then(response => response.json())
-    .then(response => {
-      if (response) {
-        fetch('https://lit-castle-50784.herokuapp.com/image', {
-        method: 'put',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-        id: this.state.user.id
-      })
-    })
       .then(response => response.json())
-      .then(count => {
-        this.setState(Object.assign(this.state.user, {entries: count}))
+      .then(response => {
+        if (response) {
+          fetch('https://lit-castle-50784.herokuapp.com/image', {
+          method: 'put',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+          id: this.state.user.id
+        })
       })
-      .catch(console.log)
+        .then(response => response.json())
+        .then(count => {
+          this.setState(Object.assign(this.state.user, {entries: count}))
+        })
+        .catch(console.log)
+      }
+        //console.log('Is image: ' + (typeof response !== 'string')); //if image
+        if (typeof response !== 'string') { //if image
+          this.displayFaceBox(this.calculateFaceLocation(response));
+          this.setState({showError: false})
+        } else {
+          this.setState({errorMessage: 'Error. Invalid image url'})
+          this.setState({showError: true})
+        }
+      })
+      .catch(err => console.log(err));
     }
-      this.displayFaceBox(this.calculateFaceLocation(response))
-    })
-    .catch(err => console.log(err));
   }
 
   onRouteChange = (route) => {
@@ -137,7 +152,14 @@ class App extends Component {
                 onInputChange={this.onInputChange}
                 onButtonSubmit={this.onPictureSubmit}
               />
-              <FaceRecognition box={box} imageUrl={imageUrl}/>
+              {this.state.showError ? 
+                <Error  
+                  errorMessage={this.state.errorMessage}
+                  showError={this.state.showError}
+                /> 
+                : null
+              }
+              {!this.state.showError ? <FaceRecognition box={box} imageUrl={imageUrl}/> : null}
             </div>
             : (route === 'signin' || route === 'signout' )
             ?<div>
