@@ -1,0 +1,14 @@
+#signUpForm {
+  display: block;
+  margin: 0 auto;
+  margin-top: 20vh;
+  max-width: 300px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serifww;
+}
+.error {
+  display: flex;
+  text-align: left;
+  font-size: 0.7em;
+  color: black;
+}
+

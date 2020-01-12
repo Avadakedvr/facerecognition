@@ -10,7 +10,7 @@ const ImageLinkForm = ({onInputChange, onButtonSubmit}) => { //received as a par
       </p>
       <div className='center'>
         <div className='form center pa2 br2 shadow-5'>
-          <input id="validationDefault01" className='f6 pa2 w-70 center' type='text' onChange={onInputChange} required/>
+          <input id="validationDefault01" placeholder='Image URL here...' className='f6 pa2 w-70 center' type='text' onChange={onInputChange} required/>
           <button 
             type='submit'
             className='w-30 grow f5 link dib btn btn-info scanImgBtn'
