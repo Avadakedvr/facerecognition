@@ -9,6 +9,7 @@ class Signin extends React.Component {
     this.state = {
       signInEmail: '',
       signInPassword: '',
+      loading: false,
       errors: {
         email: '',
         password: '',
@@ -107,6 +108,7 @@ class Signin extends React.Component {
   onSubmitSignIn = () => {
     const { signInEmail, signInPassword } = this.state
     if (this.formIsValid()) {
+      this.setState({loading: true})
       fetch('https://lit-castle-50784.herokuapp.com/signin', {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
@@ -120,6 +122,7 @@ class Signin extends React.Component {
           this.props.loadUser(user);
           this.props.onRouteChange('home');
         } else {
+          this.setState({loading: false})
           this.setState({errorMessage: "Could not sign in. Check your details"})
           this.setState({showError: true})
         }
@@ -164,6 +167,7 @@ class Signin extends React.Component {
             required 
           />
           {errors.password.length > 0 && <span className='mb-2 error'>{errors.password}</span>}
+          {this.state.loading && <span className='mb-2 error'>{'Loading...'}</span>}
           <button onClick={this.onSubmitSignIn} className="btn btn-md btn-primary btn-block mt-4" type="submit">Sign in</button>
           <div className='lh-copy mt3'>
             <a onClick={() => onRouteChange('register')} href="#0" className="badge badge-info">Register</a>

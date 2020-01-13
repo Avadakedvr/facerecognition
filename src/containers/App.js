@@ -19,6 +19,7 @@ const initialState = {
   isSignedIn: false,
   showError: false,
   errorMessage: '',
+  loading: false,
   user: {
     id: '',
     name: '',
@@ -85,6 +86,7 @@ class App extends Component {
       this.setState({showError: true})
       this.setState({errorMessage: 'Please enter your image url'})
     } else {
+      this.setState({loading: true})
       fetch('https://lit-castle-50784.herokuapp.com/imageurl', { ////RECEIVE_POINT_FROM_SERVER
           method: 'post',
           headers: {'Content-Type': 'application/json'},
@@ -95,6 +97,7 @@ class App extends Component {
       .then(response => response.json())
       .then(response => {
         if (response) {
+          this.setState({loading: false})
           fetch('https://lit-castle-50784.herokuapp.com/image', {
           method: 'put',
           headers: {'Content-Type': 'application/json'},
@@ -151,6 +154,7 @@ class App extends Component {
               <ImageLinkForm 
                 onInputChange={this.onInputChange}
                 onButtonSubmit={this.onPictureSubmit}
+                loading={this.state.loading}
               />
               {this.state.showError ? 
                 <Error  

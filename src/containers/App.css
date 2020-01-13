@@ -8,7 +8,7 @@
 }
 
 .square {
-  height: 100%;
+  min-height: 100vh;
   background-image: 
     linear-gradient(transparent 11px, rgba(0, 0, 0, 0.10) 12px, transparent 12px),
     linear-gradient(90deg, transparent 11px, rgba(0, 0, 0, 0.10) 12px, transparent 12px);

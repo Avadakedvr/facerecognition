@@ -15,3 +15,15 @@
 .scanImgBtn{
   border-radius: 0px;
 }
+
+.loading {
+  width: 700px;
+}
+
+.error {
+  width: 685px;
+  display: flex;
+  text-align: left;
+  font-size: 0.7em;
+  color: black;
+}

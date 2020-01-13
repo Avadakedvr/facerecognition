@@ -10,6 +10,7 @@ class Register extends React.Component {
       email: '',
       password: '',
       password_match: false,
+      loading: false,
       errors: {
         name: '',
         email: '',
@@ -126,6 +127,7 @@ class Register extends React.Component {
   onSubmitRegister = () => {
     const {name, email, password} = this.state;
     if (this.formIsValid()) {
+      this.setState({loading: true})
       fetch('https://lit-castle-50784.herokuapp.com/register', {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
@@ -142,6 +144,7 @@ class Register extends React.Component {
           this.props.onRouteChange('home');
         } else {
           //DISPLAY ERROR
+          this.setState({loading: false})
           this.setState({errorMessage: "Could not register user."})
           this.setState({showError: true})
         }
@@ -188,6 +191,7 @@ class Register extends React.Component {
           <label htmlFor="inputPassword" className="sr-only">Confirm password</label>
           <input name="c_password" onKeyPress={this.onEnterKeyPress} onChange={this.handleChange} type="password" id="inputCPassword" className="form-control " placeholder="Confirm password" required />
           {errors.c_password.length > 0 && <span className='error'>{errors.c_password}</span>}
+          {this.state.loading && <span className='mb-2 error'>{'Loading...'}</span>}
           <button onClick={this.onSubmitRegister} className="btn btn-md btn-primary btn-block mt-4" type="submit">Register</button>
           <div className='lh-copy mt3'>
             <a href="#0" onClick={() => onRouteChange('signin')} className="badge badge-info">Sign in</a>
